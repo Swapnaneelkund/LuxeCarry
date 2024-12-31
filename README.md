@@ -91,16 +91,14 @@ If you'd like to contribute to LuxeCarry, follow these steps:
     Commit your changes (git commit -m 'Add feature').
     Push to the branch (git push origin feature-name).
     Open a pull request.
+![Screenshot from 2024-12-31 13-17-05](https://github.com/user-attachments/assets/a43e2ba8-07ff-4a17-b4fa-98d87f800fc6)
+![Screenshot from 2024-12-31 13-16-01](https://github.com/user-attachments/assets/d7523130-9b50-4d6a-9ada-4ee89267b375)
+![Screenshot from 2024-12-31 13-15-46](https://github.com/user-attachments/assets/bf789bf8-7c58-49eb-bba2-10c40853fd45)
+![Screenshot from 2024-12-31 13-15-39](https://github.com/user-attachments/assets/30e8c2c9-94fc-49aa-bd30-4dde8f9b8293)
+![Screenshot from 2024-12-31 13-15-24](https://github.com/user-attachments/assets/2d6c6376-6af7-430d-a3d9-f1d7546565ed)
+![Screenshot from 2024-12-31 13-14-08](https://github.com/user-attachments/assets/06ec57e9-536d-4543-bf01-2a18705f84c5)
 
 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-Acknowledgments![Screenshot from 2024-12-31 13-17-05](https://github.com/user-attachments/assets/96ad1dda-6a4f-4908-bcd3-8749c7751647)
-![Screenshot from 2024-12-31 13-16-01](https://github.com/user-attachments/assets/54ad8830-0999-4dac-8b5f-5347b650c40b)
-![Screenshot from 2024-12-31 13-15-46](https://github.com/user-attachments/assets/82781838-8f1d-47e2-bd9f-964e4d79df9c)
-![Screenshot from 2024-12-31 13-15-39](https://github.com/user-attachments/assets/5c24c6c3-ce32-47e8-bd61-b996610ce4ae)
-![Screenshot from 2024-12-31 13-15-24](https://github.com/user-attachments/assets/8992df89-a64e-463a-8d6f-2338a1b56412)
-![Screenshot from 2024-12-31 13-14-08](https://github.com/user-attachments/assets/3c9e28c3-7cb9-4cd9-946f-7d1deb0a6c39)
 
 
     Tailwind CSS for a modern and responsive UI.![Screenshot from 2024-12-31 13-17-05](https://github.com/user-attachments/assets/083e7512-1fce-4523-bf95-b620a2d454bd)

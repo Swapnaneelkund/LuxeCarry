@@ -97,9 +97,9 @@ If you'd like to contribute to LuxeCarry, follow these steps:
 ![Screenshot from 2024-12-31 13-15-39](https://github.com/user-attachments/assets/30e8c2c9-94fc-49aa-bd30-4dde8f9b8293)
 ![Screenshot from 2024-12-31 13-15-24](https://github.com/user-attachments/assets/2d6c6376-6af7-430d-a3d9-f1d7546565ed)
 ![Screenshot from 2024-12-31 13-14-08](https://github.com/user-attachments/assets/06ec57e9-536d-4543-bf01-2a18705f84c5)
-
-License
-
+![Screenshot from 2024-12-31 18-54-21](https://github.com/user-attachments/assets/caacb3df-d922-477c-8153-1684a9a82edf)
+![Screenshot from 2024-12-31 18-54-08](https://github.com/user-attachments/assets/e6653151-78c0-4ee9-9033-4f456586970d)
+![Screenshot from 2024-12-31 18-53-48](https://github.com/user-attachments/assets/62a111bb-2f11-4081-8f0e-d92bcea77f3b)
 
     Tailwind CSS for a modern and responsive UI.![Screenshot from 2024-12-31 13-17-05](https://github.com/user-attachments/assets/083e7512-1fce-4523-bf95-b620a2d454bd)
 

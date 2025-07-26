@@ -1,4 +1,4 @@
-const mongoose=require('mongoose');
+import mongoose from "mongoose";
 const ownerSchema=mongoose.Schema({
     fullname:{
         type:String,
@@ -27,4 +27,4 @@ const ownerSchema=mongoose.Schema({
     }
 })
 const OwnerModel=mongoose.model("Owner",ownerSchema);
-module.exports=OwnerModel;
+export default OwnerModel;

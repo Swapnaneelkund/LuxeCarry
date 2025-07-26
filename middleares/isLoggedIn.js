@@ -8,16 +8,14 @@ module.exports=async function(req,res,next){
     try {
         const decode=jwt.verify(req.cookies.token,process.env.JWT_KEY);
         const user=await userModel
-        .findOne({email:decode.user})
+        .findById(decode.id)
         .select("-password");
 
         if (!user) {
             req.flash("error", "Invalid token or user does not exist");
             return res.redirect("/");
         }
-        //console.log(req)
         req.user=user;
-        //console.log(req.user)
         next();
     } catch (error) {
         req.flash("error","something went wrong");

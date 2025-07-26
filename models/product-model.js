@@ -16,4 +16,4 @@ const productSchema=mongoose.Schema({
     textcolor:String
 });
 
-module.exports=mongoose.model("Products",productSchema);
+export default mongoose.model("Products",productSchema);

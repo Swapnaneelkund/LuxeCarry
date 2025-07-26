@@ -17,7 +17,7 @@ export const getShop = asyncHandler(async (req, res) => {
   const products = await productModel.find(query);
   const formattedProducts = products.map(product => ({
     id: product._id,
-    image: product.image.data.toString("base64"),
+    image: product.secure_url,
     mimeType: product.image.contentType || "image/jpeg",
     name: product.name,
     price: product.price,
@@ -84,7 +84,7 @@ export const getCart = asyncHandler(async (req, res) => {
   }, {});
   const cartItems = Object.values(cartItemsMap).map(item => ({
     id: item.product._id,
-    image: item.product.image.data.toString("base64"),
+    image: item.secure_url,
     mimeType: item.product.image.contentType || "image/jpeg",
     name: item.product.name,
     price: item.product.price,

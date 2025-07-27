@@ -1,9 +1,10 @@
-const productSchema = joi.object({
-    name: joi.string().required(),
-    price: joi.number().required(),
-    discount: joi.number().required(),
-    bgcolor: joi.string().required(),
-    panelcolor: joi.string().required(),
-    textcolor: joi.string().required(),
+import Joi from "joi";
+const productSchema = Joi.object({
+    name: Joi.string().required(),
+    price: Joi.number().required(),
+    discount: Joi.number().required(),
+    bgcolor: Joi.string().required(),
+    panelcolor: Joi.string().required(),
+    textcolor: Joi.string().required(),
 });
 export default productSchema;

@@ -7,7 +7,7 @@ import {
   renderAdminDashboard,
   renderCreateProduct,
   logoutOwner
-} from "../controllers/ownerController.js";
+} from "../controllers/ownersController.js";
 
 const router = express.Router();
 

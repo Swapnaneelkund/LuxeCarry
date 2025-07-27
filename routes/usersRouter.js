@@ -6,9 +6,10 @@ import {
   logOut
 } from "../controllers/usersController.js";
 
-app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+const router = express.Router();
+router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
-app.get(
+router.get(
   '/auth/google/callback',
   passport.authenticate('google', { session: false, failureRedirect: '/login' }),
   async (req, res) => {
@@ -24,29 +25,6 @@ app.get(
     res.redirect('/shop');
   }
 );
-
-const router = express.Router();
-router.get('/auth/google',
-  passport.authenticate('google', { scope: ['profile', 'email'] })
-);
-
-app.get(
-  "/auth/google/callback",
-  passport.authenticate("google", {
-    failureRedirect: "/login",
-    session: true, 
-  }),
-  (req, res) => {
-    res.cookie("jwt", req.token, {
-      httpOnly: true,      
-      secure: false,       
-      maxAge: 1000 * 60 * 60 * 24 * 30 * 6 
-    });
-
-    res.redirect("/shop"); 
-  }
-);
-
 
 router.post("/register", registerUser);
 

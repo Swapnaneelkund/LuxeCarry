@@ -12,7 +12,7 @@ import usersRouter from "./routes/usersRouter.js";
 import productsRouter from "./routes/productsRouter.js";
 import connection from "./configuration/dbConnection.js";
 import errorHandler from "./middleares/globalErrorHandler.js";
-
+import configureGoogleStrategy from './configuration/googleOathPassport.js';
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 const __filename = fileURLToPath(import.meta.url);
@@ -21,9 +21,8 @@ const __dirname = dirname(__filename);
 dotenv.config();
 
 const app = express();
-
 await connection();
-
+configureGoogleStrategy(passport);
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
@@ -37,10 +36,7 @@ app.use(
 );
 
 app.use(passport.initialize());
-app.use(passport.session());
-
 app.use(flash());
-
 app.use(express.static(path.join(__dirname, "public")));
 
 app.set("view engine", "ejs");

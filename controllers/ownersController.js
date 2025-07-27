@@ -3,7 +3,7 @@ import { ownerRegisterSchema, ownerLoginSchema } from "../validations/ownerValid
 import  generateToken  from "../utils/generateToken.js";
 import OwnerModel from "../models/owner-model.js";
 import productModel from "../models/product-model.js";
-import asyncHandler from "../middlewares/asyncHandler.js";
+import asyncHandler from "../utils/AsyncHandler.js";
 
 export const renderLogin = (req, res) => {
   const error = req.flash("error");

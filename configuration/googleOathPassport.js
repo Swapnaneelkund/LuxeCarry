@@ -1,9 +1,9 @@
-// google-auth.js
-import { Strategy } from 'passport-google-oauth20';
-import userModel from '../models/user-model.js'
-module.exports = function (passport) {
+import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+import userModel from '../models/user-model.js';
+
+export default function configureGoogleStrategy(passport) {
   passport.use(
-    new Strategy(
+    new GoogleStrategy(
       {
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -30,4 +30,4 @@ module.exports = function (passport) {
       }
     )
   );
-};
+}

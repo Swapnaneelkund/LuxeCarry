@@ -1,10 +1,10 @@
 import express from "express";
-import isLoggedIn from "../middlewares/isLoggedIn.js";
+import isLoggedIn from "../middleares/isLoggedIn.js";
 import {
   getHome,
   getShop,
   addToCart,
-  addToCartSilent,
+  addToCartMultiple,
   removeFromCart,
   getCart,
   getCheckout,
@@ -15,7 +15,7 @@ const router = express.Router();
 router.get("/", getHome);
 router.get("/shop", isLoggedIn, getShop);
 router.get("/addtocart/:id", isLoggedIn, addToCart);
-router.get("/addtocarts/:id", isLoggedIn, addToCartSilent);
+router.get("/addtocarts/:id", isLoggedIn, addToCartMultiple);
 router.post("/removefromcart/:id/:quantity", isLoggedIn, removeFromCart);
 router.get("/cart", isLoggedIn, getCart);
 router.get("/checkout", isLoggedIn, getCheckout);

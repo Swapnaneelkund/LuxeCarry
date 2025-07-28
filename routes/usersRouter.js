@@ -5,6 +5,7 @@ import {
   loginUser,
   logOut
 } from "../controllers/usersController.js";
+import googleOath from "../controllers/googleOathController.js";
 
 const router = express.Router();
 router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
@@ -12,17 +13,7 @@ router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 
 router.get(
   '/auth/google/callback',
   passport.authenticate('google', { session: false, failureRedirect: '/login' }),
-  async (req, res) => {
-    const token = req.user.generateAuthToken();
-    res.cookie('token', token, {
-      httpOnly: true,
-      secure: 'true',
-      sameSite: 'none',
-      maxAge: 1000 * 60 * 60 * 24 * 30 * 6 
-    });
-
-    res.redirect('/shop');
-  }
+  googleOath
 );
 
 router.post("/register", registerUser);

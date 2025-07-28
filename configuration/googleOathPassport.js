@@ -12,7 +12,6 @@ export default function configureGoogleStrategy(passport) {
       },
       async (req, accessToken, refreshToken, profile, done) => {
         try {
-          console.log("google :  ",profile)
           const email = profile.emails?.[0].value;
           let user = await userModel.findOne({
             $or: [

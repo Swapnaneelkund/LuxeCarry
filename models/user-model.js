@@ -34,8 +34,6 @@ const userSchema = mongoose.Schema({
         type: String
     }
 });
-
-const userModel = mongoose.model("User", userSchema);
 userSchema.pre("save", function (next){
     if(!this.isModified("password")) return  next();
     bcrypt.hash(this.password,process.env.salt)
@@ -59,4 +57,5 @@ const token = jwt.sign(
  );
  return token;
 }
+const userModel = mongoose.model("User", userSchema);
 export default userModel;

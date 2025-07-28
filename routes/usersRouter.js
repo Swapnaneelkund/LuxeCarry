@@ -14,10 +14,9 @@ router.get(
   passport.authenticate('google', { session: false, failureRedirect: '/login' }),
   async (req, res) => {
     const token = req.user.generateAuthToken();
-
     res.cookie('token', token, {
       httpOnly: true,
-      secure: false,
+      secure: 'true',
       sameSite: 'none',
       maxAge: 1000 * 60 * 60 * 24 * 30 * 6 
     });

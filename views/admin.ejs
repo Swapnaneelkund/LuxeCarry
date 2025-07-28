@@ -48,7 +48,7 @@
                     <div class="w-full bg-white shadow-md rounded-md overflow-hidden transform hover:scale-105 transition duration-300 ease-in-out">
                         <!-- Product Image -->
                         <div class="w-full h-52 flex items-center justify-center bg-[<%= product.bgcolor %>]" style="position: relative;">
-                            <img class="h-[12rem]" src="data:<%= product.mimeType %>;base64,<%= product.image %>" alt="<%= product.name %>">
+                            <img class="h-[12rem]" src="<%= product.image %>" alt="<%= product.name %>">
                             <!-- Discount Ribbon -->
                             <% if (product.discount) { %>
                                 <div class="absolute top-0 left-0 bg-red-500 text-white text-xs px-2 py-1 transform -rotate-45 origin-top-left" style="z-index: 10;">

@@ -15,6 +15,7 @@ import errorHandler from "./middleares/globalErrorHandler.js";
 import configureGoogleStrategy from './configuration/googleOathPassport.js';
 import { fileURLToPath } from "url";
 import { dirname } from "path";
+import { cloudinaryConfig } from "./configuration/cloudinaryConfig.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -23,6 +24,7 @@ dotenv.config();
 const app = express();
 await connection();
 configureGoogleStrategy(passport);
+cloudinaryConfig();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());

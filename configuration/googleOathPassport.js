@@ -7,13 +7,19 @@ export default function configureGoogleStrategy(passport) {
       {
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: '/auth/google/callback',
+        callbackURL: '/users/auth/google/callback',
         passReqToCallback: true,
       },
       async (req, accessToken, refreshToken, profile, done) => {
         try {
-          let user = await userModel.findOne({ googleId: profile.id });
-
+          console.log("google :  ",profile)
+          const email = profile.emails?.[0].value;
+          let user = await userModel.findOne({
+            $or: [
+             { googleId: profile.id },
+             { email: email }
+           ]
+          });
           if (!user) {
             user = await userModel.create({
               googleId: profile.id,

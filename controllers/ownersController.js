@@ -7,12 +7,12 @@ import asyncHandler from "../utils/AsyncHandler.js";
 
 export const renderLogin = (req, res) => {
   const error = req.flash("error");
-  res.render("ownerLogin", { error });
+  res.render("ownerLogin", { error,loggedin: false });
 };
 
 export const renderRegister = (req, res) => {
   const error = req.flash("error");
-  res.render("ownerRegister", { error });
+  res.render("ownerRegister", { error ,loggedin: false});
 };
 
 export const registerOwner = asyncHandler(async (req, res) => {
@@ -64,8 +64,7 @@ export const renderAdminDashboard = asyncHandler(async (req, res) => {
 
   const formatted = products.map((product) => ({
     id: product._id,
-    image: product.image.data.toString("base64"),
-    mimeType: product.image.contentType || "image/jpeg",
+    image: product.img.url,
     name: product.name,
     price: product.price,
     discount: product.discount,
@@ -74,11 +73,11 @@ export const renderAdminDashboard = asyncHandler(async (req, res) => {
     textcolor: product.textcolor,
   }));
 
-  res.render("admin", { success, error, products: formatted });
+  res.render("admin", { success, error, products: formatted,loggedin: false});
 });
 
 export const renderCreateProduct = (req, res) => {
-  res.render("createproducts");
+  res.render("createproducts",{loggedin: false});
 };
 
 export const logoutOwner = (req, res) => {

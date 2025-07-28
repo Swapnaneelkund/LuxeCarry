@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 const productSchema=mongoose.Schema({
-    img: {public_id: {type: 'string',},
-    secure_url: {type: 'string',}
+    img: {url: {type: 'string',},
+    public_id: {type: 'string',}
     },
     name:String,
     price:Number, 

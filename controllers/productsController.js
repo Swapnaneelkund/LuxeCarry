@@ -11,12 +11,8 @@ export const createProduct = asyncHandler(async (req, res) => {
   if (error) {
     throw new ApiError(error.details.map(e => e.message).join(', '), 400);
   }
-  if (!req.file || !req.file.path) {
-    throw new ApiError('Product image is required', 400);
-  }
-  const result = await uploader.upload(req.file.path);
   await productModel.create({
-    image: req.cloudinaryImage,
+    img: req.cloudinaryImage,
     name,
     price,
     discount,

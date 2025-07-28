@@ -5,8 +5,8 @@ const connection = async()=>{
    .then(()=>{
       logger.info("database connected")
    })
-   .catch(()=>{
-    logger.warn("mongodb connection error");
+   .catch((err)=>{
+    logger.warn(err.message);
     process.exit(1);
    })
 }

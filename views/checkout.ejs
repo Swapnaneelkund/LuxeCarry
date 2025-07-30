@@ -22,7 +22,7 @@
 
       <!-- Stripe Card Element -->
       <div id="card-element"></div>
-      <button type="submit"   class="text-2xl bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded transition duration-300 ease-in-out">Pay <%= amount %></button>
+      <button type="submit"  id="payBtn" class="text-2xl bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded transition duration-300 ease-in-out ">Pay <%= amount %></button>
     </form>
     <div id="payment-result"></div>
 </div>
@@ -38,10 +38,11 @@
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
-    
+    const payBtn = document.querySelector("#payBtn");
+    payBtn.disabled = true;
+    payBtn.innerText = "Processing...";
     const amount = document.getElementById("amount").value;
 
-    // STEP 1: Call backend to create a PaymentIntent
     const res = await fetch("/payment", {
       method: "POST",
       headers: {
@@ -57,7 +58,6 @@
       return;
     }
 
-    // STEP 2: Confirm the card payment
     const result = await stripe.confirmCardPayment(data.clientSecret, {
       payment_method: {
         card: card,

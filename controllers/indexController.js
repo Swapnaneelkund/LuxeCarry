@@ -123,6 +123,7 @@ export const checkout= asyncHandler(async(req,res)=>{
     const cart= user.cart;
     const cart1 = cart.filter(item => item.product).map(item =>({
       price:item.product.price,
+      quantity: item.quantity
     }))
     const calculatedAmount=cart1.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
@@ -136,6 +137,7 @@ export const payment = asyncHandler(async (req, res) => {
     const cart= user.cart;
     const cart1 = cart.filter(item => item.product).map(item =>({
       price:item.product.price,
+      quantity: item.quantity
     }))
     const amount=cart1.reduce((sum, item) => sum + item.price * item.quantity, 0);
 

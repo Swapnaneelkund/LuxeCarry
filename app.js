@@ -1,11 +1,11 @@
+import dotenv from "dotenv";
+dotenv.config();
 import express from "express";
 import cookieParser from "cookie-parser";
 import path from "path";
 import expressSession from "express-session";
 import flash from "connect-flash";
-import dotenv from "dotenv";
 import passport from "passport";
-
 import indexRouter from "./routes/indexRouter.js";
 import ownersRouter from "./routes/ownersRouter.js";
 import usersRouter from "./routes/usersRouter.js";
@@ -18,9 +18,6 @@ import { dirname } from "path";
 import { cloudinaryConfig } from "./configuration/cloudinaryConfig.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-
-dotenv.config();
-
 const app = express();
 await connection();
 configureGoogleStrategy(passport);

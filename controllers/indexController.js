@@ -2,6 +2,10 @@ import asyncHandler from "../utils/AsyncHandler.js";
 import productModel from "../models/product-model.js";
 import userModel from "../models/user-model.js";
 import { ApiError } from "../utils/ApiError.js";
+import dotenv from "dotenv";
+dotenv.config();
+import Stripe from "stripe";
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 // GET /
 export const getHome = asyncHandler(async (req, res) => {
@@ -30,23 +34,44 @@ export const getShop = asyncHandler(async (req, res) => {
   res.render("shop", { products: formattedProducts, search, success });
 });
 
-// GET /addtocart/:id
-export const addToCart = asyncHandler(async (req, res) => {
-  const productId = req.params.id;
-  const user = await userModel.findOne({ email: req.user.email });
-  if (!user) throw new ApiError(404, "User not found");
-  user.cart.push(productId);
-  await user.save();
-  res.redirect("/cart");
-});
 
-// GET /addtocarts/:id
+
 export const addToCartMultiple = asyncHandler(async (req, res) => {
   const productId = req.params.id;
   const user = await userModel.findOne({ email: req.user.email });
   if (!user) throw new ApiError(404, "User not found");
-  const alreadyInCart = user.cart.includes(productId);
-  user.cart.push(productId);
+  const productIdStr = productId.toString();
+  const alreadyInCart = user.cart.find(
+    (item) => item.product.toString() === productIdStr
+  );
+  if (alreadyInCart) {
+    alreadyInCart.quantity = (alreadyInCart.quantity || 0) + 1;
+  } else {
+    user.cart.push({
+      product: productId,
+      quantity: 1
+    });
+  }
+  await user.save();
+  req.flash("success", alreadyInCart ? "Added another instance to cart" : "Added to cart");
+  res.redirect("/cart");
+});
+export const addToCartMultiple1 = asyncHandler(async (req, res) => {
+  const productId = req.params.id;
+  const user = await userModel.findOne({ email: req.user.email });
+  if (!user) throw new ApiError(404, "User not found");
+  const productIdStr = productId.toString();
+  const alreadyInCart = user.cart.find(
+    (item) => item.product.toString() === productIdStr
+  );
+  if (alreadyInCart) {
+    alreadyInCart.quantity = (alreadyInCart.quantity || 0) + 1;
+  } else {
+    user.cart.push({
+      product: productId,
+      quantity: 1
+    });
+  }
   await user.save();
   req.flash("success", alreadyInCart ? "Added another instance to cart" : "Added to cart");
   res.redirect("/shop");
@@ -58,30 +83,23 @@ export const removeFromCart = asyncHandler(async (req, res) => {
   const quantityToRemove = parseInt(req.params.quantity);
   const user = await userModel.findOne({ email: req.user.email });
   if (!user) throw new ApiError(404, "User not found");
-  let removedCount = 0;
-  user.cart = user.cart.filter(item => {
-    if (item.toString() === productId && removedCount < quantityToRemove) {
-      removedCount++;
-      return false;
-    }
-    return true;
-  });
+  const inCart=user.cart.find(item => item.product.toString() === productId.toString());
+  inCart.quantity -= quantityToRemove;
+  if (inCart.quantity <= 0) {
+    user.cart = user.cart.filter(item => item.product.toString() !== productId.toString());
+  }
   await user.save();
   req.flash("success", `${quantityToRemove} product(s) removed from cart.`);
   res.redirect("/cart");
 });
 
-// GET /cart
 export const getCart = asyncHandler(async (req, res) => {
-  const user = await userModel.findOne({ email: req.user.email }).populate("cart");
+  const user = await userModel.findOne({ email: req.user.email }).populate("cart.product");
   if (!user) throw new ApiError(404, "User not found");
-  const cartItemsMap = user.cart.reduce((acc, product) => {
-    const id = product._id.toString();
-    if (!acc[id]) acc[id] = { product, quantity: 0 };
-    acc[id].quantity++;
-    return acc;
-  }, {});
-  const cartItems = Object.values(cartItemsMap).map(item => ({
+  console.log(user);
+  const cart= user.cart;
+  const cart1=cart.map(item =>({
+    quantity: item.quantity,
     id: item.product._id,
     image: item.product.img.url,
     name: item.product.name,
@@ -90,15 +108,41 @@ export const getCart = asyncHandler(async (req, res) => {
     bgcolor: item.product.bgcolor,
     panelcolor: item.product.panelcolor,
     textcolor: item.product.textcolor,
-    quantity: item.quantity,
-  }));
-  const totalPrice = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  }))
+  const totalPrice = cart1.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const success = req.flash("success");
   const error = req.flash("error");
-  res.render("cart", { products: cartItems, success, error, totalPrice });
+  res.render("cart", { products: cart1, success, error, totalPrice });
 });
 
-// GET /checkout
-export const getCheckout = asyncHandler(async (req, res) => {
-  res.render("payment");
+export const checkout= asyncHandler(async(req,res)=>{
+  const calculatedAmount=req.query.price 
+  res.render("checkout", { amount: calculatedAmount,STRIPE_PUBLISHABLE_KEY:process.env.STRIPE_PUBLISHABLE_KEY});
+})
+
+export const payment = asyncHandler(async (req, res) => {
+  try {
+    const { amount } = req.body;
+
+    // Stripe expects amount in paise (₹1 = 100 paise)
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: amount * 100, // ₹50 => 5000 paise
+      currency: 'inr',
+      automatic_payment_methods: {
+        enabled: true, // allows saved cards, UPI etc.
+      },
+    });
+    if(paymentIntent){
+      const user =req.user;
+      user.cart.push(...user.cart);
+      await user.save();
+    }
+    res.status(200).json({
+      success: true,
+      clientSecret: paymentIntent.client_secret,
+    });
+  } catch (err) {
+    console.error("Stripe Error:", err);
+    throw new ApiError("Payment failed", 500);
+  }
 });

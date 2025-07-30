@@ -49,7 +49,7 @@
                                 <button type="submit" class="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600">-</button>
                             </form>
                             <span class="px-3 py-1 bg-gray-100 rounded"><%= item.quantity %></span>
-                            <form action="/addtocart/<%= item.id %>" method="get" class="ml-2">
+                            <form action="/addtocarts/<%= item.id %>" method="get" class="ml-2">
                                 <button type="submit" class="px-2 py-1 bg-green-500 text-white rounded hover:bg-green-600">+</button>
                             </form>
                         </div>
@@ -63,7 +63,7 @@
                         <span class="font-semibold">Total:</span>
                         <span class="font-semibold">₹ <%= totalPrice %></span>
                     </div>
-                    <form action="/checkout" method="POST" class="mt-5">
+                    <form action="/checkout" method="get" class="mt-5">
                         <button type="submit" class="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700">
                             Proceed Payment
                         </button>

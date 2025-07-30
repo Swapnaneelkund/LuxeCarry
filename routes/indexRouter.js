@@ -3,21 +3,21 @@ import isLoggedIn from "../middleares/isLoggedIn.js";
 import {
   getHome,
   getShop,
-  addToCart,
   addToCartMultiple,
   removeFromCart,
   getCart,
-  getCheckout,
+  checkout,
+  payment,
+  addToCartMultiple1
 } from "../controllers/indexController.js";
-
 const router = express.Router();
-
 router.get("/", getHome);
 router.get("/shop", isLoggedIn, getShop);
-router.get("/addtocart/:id", isLoggedIn, addToCart);
 router.get("/addtocarts/:id", isLoggedIn, addToCartMultiple);
+router.get("/addtocarts1/:id", isLoggedIn, addToCartMultiple1);
 router.post("/removefromcart/:id/:quantity", isLoggedIn, removeFromCart);
 router.get("/cart", isLoggedIn, getCart);
-router.get("/checkout", isLoggedIn, getCheckout);
+router.get("/checkout", isLoggedIn, checkout);
+router.post("/payment", isLoggedIn ,payment);
 
 export default router;

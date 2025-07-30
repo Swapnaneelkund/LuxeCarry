@@ -98,7 +98,7 @@ export const getCart = asyncHandler(async (req, res) => {
   if (!user) throw new ApiError(404, "User not found");
   const cart= user.cart;
  const cart1 = cart
-  .filter(item => item.product) // prevent null product
+  .filter(item => item.product) 
   .map(item => ({
     quantity: item.quantity,
     id: item.product._id,
@@ -118,20 +118,32 @@ export const getCart = asyncHandler(async (req, res) => {
 });
 
 export const checkout= asyncHandler(async(req,res)=>{
-  const calculatedAmount=req.body.price 
+   const user = await userModel.findOne({ email: req.user.email }).populate("cart.product");
+    if(!user) throw new ApiError(404,"user not found");
+    const cart= user.cart;
+    const cart1 = cart.filter(item => item.product).map(item =>({
+      price:item.product.price,
+    }))
+    const calculatedAmount=cart1.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
   res.render("checkout", { amount: calculatedAmount,STRIPE_PUBLISHABLE_KEY:process.env.STRIPE_PUBLISHABLE_KEY});
 })
 
 export const payment = asyncHandler(async (req, res) => {
   try {
-    const { amount } = req.body;
+    const user = await userModel.findOne({ email: req.user.email }).populate("cart.product");
+    if(!user) throw new ApiError(404,"user not found");
+    const cart= user.cart;
+    const cart1 = cart.filter(item => item.product).map(item =>({
+      price:item.product.price,
+    }))
+    const amount=cart1.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
-    // Stripe expects amount in paise (₹1 = 100 paise)
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: amount * 100, // ₹50 => 5000 paise
+      amount: amount * 100, 
       currency: 'inr',
       automatic_payment_methods: {
-        enabled: true, // allows saved cards, UPI etc.
+        enabled: true, 
       },
     });
     if(paymentIntent){

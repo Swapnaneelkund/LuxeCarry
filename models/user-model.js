@@ -35,10 +35,20 @@ cart: [
   }
 ]
 ,
-  orders: {
-    type: Array,
-    default: [],
-  },
+  orders: [
+{
+    product: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Products",
+      required: true
+    },
+    quantity: {
+      type: Number,
+      default: 1,
+      min: 1
+    }
+}
+  ],
   contact: {
     type: String,
   },
@@ -47,20 +57,6 @@ cart: [
   },
 });
 
-userSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) return next();
-  try {
-    const hash = await bcrypt.hash(this.password, 10);
-    this.password = hash;
-    next();
-  } catch (err) {
-    return next(err);
-  }
-});
-
-userSchema.methods.comparePassword = async function (password) {
-  return await bcrypt.compare(password, this.password);
-};
 
 userSchema.methods.generateAuthToken = function () {
   return jwt.sign(

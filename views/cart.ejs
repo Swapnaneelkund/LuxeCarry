@@ -63,7 +63,8 @@
                         <span class="font-semibold">Total:</span>
                         <span class="font-semibold">₹ <%= totalPrice %></span>
                     </div>
-                    <form action="/checkout" method="get" class="mt-5">
+                    <form action="/checkout" method="post" class="mt-5">
+                        <input type="text" value="<%= totalPrice %>" class="hidden" name="price">
                         <button type="submit" class="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700">
                             Proceed Payment
                         </button>

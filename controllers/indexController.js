@@ -96,9 +96,10 @@ export const removeFromCart = asyncHandler(async (req, res) => {
 export const getCart = asyncHandler(async (req, res) => {
   const user = await userModel.findOne({ email: req.user.email }).populate("cart.product");
   if (!user) throw new ApiError(404, "User not found");
-  console.log(user);
   const cart= user.cart;
-  const cart1=cart.map(item =>({
+ const cart1 = cart
+  .filter(item => item.product) // prevent null product
+  .map(item => ({
     quantity: item.quantity,
     id: item.product._id,
     image: item.product.img.url,
@@ -108,7 +109,8 @@ export const getCart = asyncHandler(async (req, res) => {
     bgcolor: item.product.bgcolor,
     panelcolor: item.product.panelcolor,
     textcolor: item.product.textcolor,
-  }))
+  }));
+
   const totalPrice = cart1.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const success = req.flash("success");
   const error = req.flash("error");
@@ -116,7 +118,7 @@ export const getCart = asyncHandler(async (req, res) => {
 });
 
 export const checkout= asyncHandler(async(req,res)=>{
-  const calculatedAmount=req.query.price 
+  const calculatedAmount=req.body.price 
   res.render("checkout", { amount: calculatedAmount,STRIPE_PUBLISHABLE_KEY:process.env.STRIPE_PUBLISHABLE_KEY});
 })
 
@@ -134,8 +136,9 @@ export const payment = asyncHandler(async (req, res) => {
     });
     if(paymentIntent){
       const user =req.user;
-      user.cart.push(...user.cart);
-      await user.save();
+       user.orders.push(...user.cart);
+       user.cart = [];      
+       await user.save();
     }
     res.status(200).json({
       success: true,
@@ -146,3 +149,20 @@ export const payment = asyncHandler(async (req, res) => {
     throw new ApiError("Payment failed", 500);
   }
 });
+export const orders= asyncHandler(async (req,res)=>{
+  const user= await userModel.findOne({email: req.user.email}).populate("orders.product");
+  if (!user) throw new ApiError(404, "User not found");
+  const order= user.orders;
+  const order1=order.filter(item => item.product).map(item =>({
+    quantity: item.quantity,
+    id: item.product._id,
+    image: item.product.img.url,
+    name: item.product.name,
+    price: item.product.price,
+    discount: item.product.discount,
+    bgcolor: item.product.bgcolor,
+    panelcolor: item.product.panelcolor,
+    textcolor: item.product.textcolor,
+  }))
+  res.render("order", { orders: order1 });
+})

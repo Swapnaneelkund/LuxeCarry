@@ -67,10 +67,10 @@
     if (result.error) {
       document.getElementById("payment-result").innerText = result.error.message;
     } else if (result.paymentIntent.status === "succeeded") {
-      document.getElementById("payment-result").innerText = "Payment successful!";
+      document.getElementById("payment-result").innerText = "Payment successful!..you will be redirected to order within few seconds";
       setTimeout(() => {
       window.location.href = "/order";
-      }, 7000);
+      }, 5000);
 
     }
   });

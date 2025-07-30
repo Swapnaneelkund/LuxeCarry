@@ -8,7 +8,8 @@ import {
   getCart,
   checkout,
   payment,
-  addToCartMultiple1
+  addToCartMultiple1,
+  orders
 } from "../controllers/indexController.js";
 const router = express.Router();
 router.get("/", getHome);
@@ -17,7 +18,8 @@ router.get("/addtocarts/:id", isLoggedIn, addToCartMultiple);
 router.get("/addtocarts1/:id", isLoggedIn, addToCartMultiple1);
 router.post("/removefromcart/:id/:quantity", isLoggedIn, removeFromCart);
 router.get("/cart", isLoggedIn, getCart);
-router.get("/checkout", isLoggedIn, checkout);
+router.post("/checkout", isLoggedIn, checkout);
 router.post("/payment", isLoggedIn ,payment);
+router.get("/order",isLoggedIn,orders)
 
 export default router;

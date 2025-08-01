@@ -13,6 +13,7 @@ import productsRouter from "./routes/productsRouter.js";
 import connection from "./configuration/dbConnection.js";
 import errorHandler from "./middleares/globalErrorHandler.js";
 import configureGoogleStrategy from './configuration/googleOathPassport.js';
+import MongoStore from "connect-mongo";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 import { cloudinaryConfig } from "./configuration/cloudinaryConfig.js";
@@ -32,7 +33,7 @@ app.use(
     saveUninitialized: false,
     secret: process.env.EXPRESS_SESSION_SECRET,
     store: MongoStore.create({
-    mongoUrl: process.env.MONGO_URI,  
+    mongoUrl: process.env.dataBaseURL,  
     ttl: 60 * 60 
   }),
   cookie: {

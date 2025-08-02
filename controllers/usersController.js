@@ -1,13 +1,19 @@
 import bcrypt from "bcrypt";
 import userModel from "../models/user-model.js";
-import  generateToken  from "../utils/generateToken.js";
-import { userRegisterSchema, userLoginSchema } from "../validations/userValidation.js";
+import generateToken from "../utils/generateToken.js";
+import {
+  userRegisterSchema,
+  userLoginSchema,
+} from "../validations/userValidation.js";
 
 export const registerUser = async (req, res) => {
   try {
     const { email, password, fullname } = req.body;
 
-    const { error } = userRegisterSchema.validate({ email, password, fullname }, { abortEarly: false });
+    const { error } = userRegisterSchema.validate(
+      { email, password, fullname },
+      { abortEarly: false },
+    );
 
     if (error) {
       req.flash("error", error.message);
@@ -25,10 +31,12 @@ export const registerUser = async (req, res) => {
 
       const token = generateToken(user);
       return res.cookie("token", token).redirect("/shop");
-
     } catch (err) {
       if (err.code === 11000) {
-        req.flash("error", "This email is already registered. Please use a different email.");
+        req.flash(
+          "error",
+          "This email is already registered. Please use a different email.",
+        );
         return res.redirect("/");
       } else {
         console.error(err);
@@ -36,7 +44,6 @@ export const registerUser = async (req, res) => {
         return res.redirect("/");
       }
     }
-
   } catch (err) {
     console.error(err);
     return res.status(500).send("Unexpected server error");
@@ -47,7 +54,10 @@ export const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    const { error } = userLoginSchema.validate({ email, password }, { abortEarly: false });
+    const { error } = userLoginSchema.validate(
+      { email, password },
+      { abortEarly: false },
+    );
     if (error) {
       req.flash("error", error.message);
       return res.redirect("/");
@@ -58,7 +68,12 @@ export const loginUser = async (req, res) => {
       req.flash("error", "Login: Email or password invalid");
       return res.redirect("/");
     }
-
+    console.log(password);
+    console.log(user);
+    if (!user.email && user.googleId) {
+      req.flash("error", "Login: Already loggedIn with google");
+      return res.redirect("/");
+    }
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       req.flash("error", "Login: Email or password invalid");
@@ -67,7 +82,6 @@ export const loginUser = async (req, res) => {
 
     const token = generateToken(user);
     return res.cookie("token", token).redirect("/shop");
-
   } catch (err) {
     console.error(err);
     req.flash("error", "Internal server problem");

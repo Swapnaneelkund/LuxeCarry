@@ -53,11 +53,11 @@
                             </div>
                         <% } %>
                         <!-- Product Image -->
-                        <div class="w-full h-52 flex items-center justify-center bg-[<%= product.bgcolor %>]">
+                        <div class="w-full h-52 flex items-center justify-center " style="background-color: <%=product.bgcolor%>;">
                             <img class="h-[12rem]" src="<%= product.image %>" alt="<%= product.name %>">
                         </div>
                         <!-- Product Details -->
-                        <div class="flex justify-between bg-[<%= product.panelcolor %>] items-center px-4 py-4 text-[<%= product.textcolor %>]">
+                        <div class="flex justify-between  items-center px-4 py-4 text-[<%= product.textcolor %>]" style="background-color: <%=product.panelcolor%>;">
                             <div>
                                 <h3 class="text-lg font-bold"><%= product.name %></h3>
                                 <h4 class="text-md">₹ <%= product.price %></h4>

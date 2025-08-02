@@ -160,7 +160,7 @@ export const payment = asyncHandler(async (req, res) => {
     });
   } catch (err) {
     console.error("Stripe Error:", err);
-    throw new ApiError("Payment failed", 500);
+    throw new ApiError(500,"Payment failed");
   }
 });
 export const orders= asyncHandler(async (req,res)=>{

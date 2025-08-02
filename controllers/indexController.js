@@ -38,44 +38,44 @@ export const getShop = asyncHandler(async (req, res) => {
 
 export const addToCartMultiple = asyncHandler(async (req, res) => {
   const productId = req.params.id;
-  const user = await userModel.findOne({ email: req.user.email });
-  if (!user) throw new ApiError(404, "User not found");
-  const productIdStr = productId.toString();
-  const alreadyInCart = user.cart.find(
-    (item) => item.product.toString() === productIdStr
+  const email = req.user.email;
+
+  const result = await userModel.updateOne(
+    { email, "cart.product": productId },
+    { $inc: { "cart.$.quantity": 1 } }
   );
-  if (alreadyInCart) {
-    alreadyInCart.quantity = (alreadyInCart.quantity || 0) + 1;
-  } else {
-    user.cart.push({
-      product: productId,
-      quantity: 1
-    });
+
+  if (result.matchedCount === 0) {
+    await userModel.updateOne(
+      { email },
+      { $push: { cart: { product: productId, quantity: 1 } } }
+    );
   }
-  await user.save();
-  req.flash("success", alreadyInCart ? "Added another instance to cart" : "Added to cart");
+
+  req.flash("success", result.matchedCount > 0 ? "Added another instance to cart" : "Added to cart");
   res.redirect("/cart");
 });
+
 export const addToCartMultiple1 = asyncHandler(async (req, res) => {
   const productId = req.params.id;
-  const user = await userModel.findOne({ email: req.user.email });
-  if (!user) throw new ApiError(404, "User not found");
-  const productIdStr = productId.toString();
-  const alreadyInCart = user.cart.find(
-    (item) => item.product.toString() === productIdStr
+  const email = req.user.email;
+
+  const result = await userModel.updateOne(
+    { email, "cart.product": productId },
+    { $inc: { "cart.$.quantity": 1 } }
   );
-  if (alreadyInCart) {
-    alreadyInCart.quantity = (alreadyInCart.quantity || 0) + 1;
-  } else {
-    user.cart.push({
-      product: productId,
-      quantity: 1
-    });
+
+  if (result.matchedCount === 0) {
+    await userModel.updateOne(
+      { email },
+      { $push: { cart: { product: productId, quantity: 1 } } }
+    );
   }
-  await user.save();
-  req.flash("success", alreadyInCart ? "Added another instance to cart" : "Added to cart");
+
+  req.flash("success", result.matchedCount > 0 ? "Added another instance to cart" : "Added to cart");
   res.redirect("/shop");
 });
+
 
 // POST /removefromcart/:id/:quantity
 export const removeFromCart = asyncHandler(async (req, res) => {

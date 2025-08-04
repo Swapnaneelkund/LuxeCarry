@@ -78,4 +78,17 @@
         </div>
     </div>
 </div>
+<script>
+  document.querySelectorAll("form").forEach(form => {
+    form.addEventListener("submit", (e) => {
+      const submitButton = form.querySelector("button[type='submit']");
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.style.opacity = "0.6";
+      }
+    });
+  });
+</script>
+
+
 <%- include('./partials/footer') %>

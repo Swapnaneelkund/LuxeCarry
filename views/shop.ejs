@@ -86,4 +86,13 @@
         <% } %>
     </div>
 </div>
+<script>
+    const button=document.querySelectorAll("a")
+    button.forEach((btn)=>{
+        btn.addEventListener("click",()=>{
+            btn.style.pointerEvents = "none";
+            btn.style.opacity = "0.6"
+        })
+    })
+</script>
 <%- include('./partials/footer') %>

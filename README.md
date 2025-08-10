@@ -14,7 +14,7 @@ https://luxecarry.onrender.com/
 - **Cart Management**: Update or remove items from the cart.
 - **Responsive UI**: Tailwind CSS is used for a modern, mobile-friendly UI design.
 - **Error Handling**: Flash messages for user notifications on success or errors.
-- **Intrgrated Cloudinary,multer and stripe
+- Intrgrated Cloudinary,multer and stripe
 
 ## Tech Stack
 

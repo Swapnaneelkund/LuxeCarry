@@ -4,6 +4,8 @@ LuxeCarry is a fully functional e-commerce platform built with HTML, Tailwind CS
 
 #DEMO EMAIL AND PASSWORD TO TEST THE FEATURE:
 Demo Login: demo@example.com | Password: pass123
+## LIVE DEMO:
+https://luxecarry.onrender.com/
 ## Features
 
 - **Google OAuth Login**: Secure user authentication via Google.

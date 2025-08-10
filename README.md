@@ -2,6 +2,8 @@
 
 LuxeCarry is a fully functional e-commerce platform built with HTML, Tailwind CSS, and a Node.js/Express backend. It offers Google OAuth authentication, product browsing, a search feature, cart management, and more. The platform features a clean and responsive design for a seamless shopping experience.
 
+#DEMO EMAIL AND PASSWORD TO TEST THE FEATURE:
+Demo Login: demo@example.com | Password: pass123
 ## Features
 
 - **Google OAuth Login**: Secure user authentication via Google.
@@ -91,7 +93,6 @@ If you'd like to contribute to LuxeCarry, follow these steps:
     Commit your changes (git commit -m 'Add feature').
     Push to the branch (git push origin feature-name).
     Open a pull request.
-![Screenshot from 2024-12-31 13-17-05](https://github.com/user-attachments/assets/a43e2ba8-07ff-4a17-b4fa-98d87f800fc6)
 ![Screenshot from 2024-12-31 13-16-01](https://github.com/user-attachments/assets/d7523130-9b50-4d6a-9ada-4ee89267b375)
 ![Screenshot from 2024-12-31 13-15-46](https://github.com/user-attachments/assets/bf789bf8-7c58-49eb-bba2-10c40853fd45)
 ![Screenshot from 2024-12-31 13-15-39](https://github.com/user-attachments/assets/30e8c2c9-94fc-49aa-bd30-4dde8f9b8293)
@@ -105,4 +106,8 @@ If you'd like to contribute to LuxeCarry, follow these steps:
 
     Google OAuth for authentication.
     nodemon for automatic server reload during development.
+
+
+
+https://github.com/user-attachments/assets/4568515d-6dc5-4f61-85b8-7d1da790f789
 

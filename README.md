@@ -1,6 +1,6 @@
 # LuxeCarry
 
-LuxeCarry is a fully functional e-commerce platform built with HTML, Tailwind CSS, and a Node.js/Express backend. It offers Google OAuth authentication, product browsing, a search feature, cart management, and more. The platform features a clean and responsive design for a seamless shopping experience.
+LuxeCarry is a fully functional e-commerce platform built with HTML, Tailwind CSS, and a Node.js/Express backend. It offers Google OAuth authentication, product browsing, a search feature, cart management, and more. The platform features a clean and responsive design for a seamless shopping experience.A Loom video is added at end
 
 #DEMO EMAIL AND PASSWORD TO TEST THE FEATURE:
 Demo Login: demo@example.com | Password: pass123
@@ -12,6 +12,7 @@ Demo Login: demo@example.com | Password: pass123
 - **Cart Management**: Update or remove items from the cart.
 - **Responsive UI**: Tailwind CSS is used for a modern, mobile-friendly UI design.
 - **Error Handling**: Flash messages for user notifications on success or errors.
+- **Intrgrated Cloudinary,multer and stripe
 
 ## Tech Stack
 
@@ -106,7 +107,7 @@ If you'd like to contribute to LuxeCarry, follow these steps:
 
     Google OAuth for authentication.
     nodemon for automatic server reload during development.
-
+LOOM VIDEO:
 
 
 https://github.com/user-attachments/assets/4568515d-6dc5-4f61-85b8-7d1da790f789
